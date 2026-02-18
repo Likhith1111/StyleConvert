@@ -4,3 +4,4 @@ numpy
 flask-sqlalchemy
 flask-login
 gunicorn; sys_platform != 'win32'
+psycopg2-binary
