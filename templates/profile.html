@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - StyleConvert</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<body>
+    <div class="app-container profile-container">
+        <header>
+            <div class="user-controls" style="position: absolute; top: 20px; right: 20px;">
+                <a href="/" class="btn-sm">Create New</a>
+                <a href="/logout" class="btn-sm">Logout</a>
+            </div>
+            <h1>Your Profile</h1>
+            <p>Welcome back, {{ current_user.username }}</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <section>
+            <h3>Recent Creations</h3>
+            {% if history %}
+            <div class="history-grid">
+                {% for item in history %}
+                <div class="history-item">
+                    <div class="history-thumb-wrapper" style="overflow: hidden;">
+                        <img src="{{ url_for('static', filename='uploads/' + item.filename) }}" alt="{{ item.style }}"
+                            class="history-img">
+                    </div>
+                    <div class="history-info">
+                        <div class="history-style">{{ item.style }}</div>
+                        <div class="history-date">{{ item.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
+                        <a href="{{ url_for('static', filename='uploads/' + item.filename) }}" download class="btn-sm"
+                            style="width: 100%; box-sizing: border-box; text-align: center;">Download</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-history">
+                <p>No creations yet.</p>
+                <a href="/" class="btn-primary" style="display: inline-block; width: auto; margin-top: 1rem;">Start
+                    Creating</a>
+            </div>
+            {% endif %}
+        </section>
+
+        <section
+            style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center;">
+            <h3 style="color: var(--danger); margin-bottom: 1rem;">Danger Zone</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Once you delete your account, there is no going
+                back. Please be certain.</p>
+            <form action="/delete_account" method="POST"
+                onsubmit="return confirm('Are you strictly sure you want to delete your account? This action cannot be undone.');">
+                <button type="submit" class="btn-danger">Delete Account</button>
+            </form>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2024 StyleConvert. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">Twitter</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                    <a href="#" class="social-icon">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

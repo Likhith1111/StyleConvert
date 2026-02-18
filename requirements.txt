@@ -1,0 +1,6 @@
+flask
+opencv-python-headless
+numpy
+flask-sqlalchemy
+flask-login
+gunicorn; sys_platform != 'win32'

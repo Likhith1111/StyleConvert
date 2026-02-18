@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleConvert - Apply Retro & Vintage Filters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="user-controls" style="position: absolute; top: 20px; right: 20px;">
+                {% if current_user.is_authenticated %}
+                <span>Hello, {{ current_user.username }}!</span>
+                <a href="/profile" class="btn-sm">My Profile</a>
+                <a href="/logout" class="btn-sm">Logout</a>
+                {% else %}
+                <a href="/login" class="btn-sm">Login</a>
+                <a href="/signup" class="btn-sm">Sign Up</a>
+                {% endif %}
+            </div>
+            <h1>StyleConvert</h1>
+            <p>Transform your photos instantly with premium filters.</p>
+        </header>
+
+        <main>
+            <div class="upload-section" id="upload-area">
+                <input type="file" id="image-upload" accept="image/*" hidden>
+                <div class="upload-placeholder">
+                    <span class="icon">📷</span>
+                    <p>Click or Drag an Image Here</p>
+                </div>
+            </div>
+
+            <div class="controls disabled" id="controls">
+                <h3>Select a Style</h3>
+                <div class="style-buttons">
+                    <button class="style-btn active" data-style="original">Original</button>
+                    <button class="style-btn" data-style="bw">B&W</button>
+                    <button class="style-btn" data-style="retro">Retro</button>
+                    <button class="style-btn" data-style="vintage">Vintage</button>
+                    <button class="style-btn" data-style="sketch">Sketch</button>
+                    <button class="style-btn" data-style="cartoon">Cartoon</button>
+                    <button class="style-btn" data-style="cyberpunk">Cyberpunk</button>
+                    <button class="style-btn" data-style="summer">Summer</button>
+                    <button class="style-btn" data-style="winter">Winter</button>
+                    <button class="style-btn" data-style="watercolor">Watercolor</button>
+                    <button class="style-btn" data-style="color_sketch">Color Sketch</button>
+                </div>
+            </div>
+
+            <div class="preview-section hidden" id="preview-section">
+                <div class="image-wrapper original">
+                    <h4>Before</h4>
+                    <img id="original-preview" src="" alt="Original Image">
+                </div>
+                <div class="image-wrapper processed">
+                    <h4>After</h4>
+                    <div class="loading-overlay hidden" id="loading">Processing...</div>
+                    <img id="processed-preview" src="" alt="Processed Result">
+                </div>
+            </div>
+
+            <div class="actions hidden" id="action-buttons">
+                <a id="download-btn" class="download-btn" href="#" download="processed_image.jpg">Download Result</a>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2024 StyleConvert. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">Twitter</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                    <a href="#" class="social-icon">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
